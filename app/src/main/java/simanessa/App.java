@@ -5,7 +5,7 @@ package simanessa;
 
 public class App {
     public String getGreeting() {
-        return "Halo dunia";
+        return "Halo ganjar";
     }
 
     public static void main(String[] args) {
