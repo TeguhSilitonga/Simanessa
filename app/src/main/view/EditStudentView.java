@@ -335,7 +335,6 @@ public class EditStudentView {
                 }
 
                 // TUGAS
-                
                 ArrayList<Double> tugasList =
                         new ArrayList<>();
 
