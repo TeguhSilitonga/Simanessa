@@ -1,3 +1,4 @@
+
 package model;
 
 public class Guru extends User {
@@ -10,4 +11,5 @@ public class Guru extends User {
     public String showRole() {
         return "Guru";
     }
+    
 }
