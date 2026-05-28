@@ -11,7 +11,6 @@ import javafx.stage.Stage;
 import model.WeightConfig;
 
 public class WeightView {
-
     public static void showWindow() {
         Stage stage = new Stage();
         VBox root = new VBox(15);

@@ -13,7 +13,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.Student;
-
 import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
