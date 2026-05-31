@@ -69,7 +69,7 @@ public class DataSiswaView {
         // TABLE SETTINGS
         createColumns();
         table.setItems(data);
-        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
         VBox.setVgrow(table, Priority.ALWAYS);
 
         leftContent.getChildren().addAll(headerBox, table);
