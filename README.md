@@ -19,6 +19,7 @@ SIMANESSA adalah aplikasi desktop berbasis **JavaFX** yang menerapkan pola arsit
 
 Proyek ini dipisahkan secara terstruktur berdasarkan tanggung jawab komponen logisnya:
 
+```text
 app/src/main/java/
 │
 ├── app/
@@ -42,7 +43,7 @@ app/src/main/java/
     ├── EditStudentView.java    # Dialog pembaruan/reduksi komponen nilai siswa
     ├── WeightView.java         # Antarmuka modifikasi konfigurasi bobot nilai global
     └── AlertHelper.java        # Kelas utilitas dialog notifikasi kustom
-
+```
 ---
 
 ## 📦 Prasyarat Sistem
