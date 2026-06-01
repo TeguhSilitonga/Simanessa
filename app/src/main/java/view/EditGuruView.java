@@ -56,9 +56,10 @@ public class EditGuruView {
                 AlertHelper.showError("Semua kolom input wajib diisi!"); return;
             }
 
-            // FIX BUG 3: Validasi Nama Sangat Ketat (Hanya huruf dan spasi)
-            if (!nama.matches("^[a-zA-Z\\s]+$")) {
-                AlertHelper.showError("Nama guru hanya boleh berisi huruf abjad dan spasi!"); return;
+            // KODE BARU (Sudah diizinkan pakai titik dan koma):
+            if (!nama.matches("^[a-zA-Z\\s.,]+$")) {
+                 AlertHelper.showError("Nama guru hanya boleh berisi huruf, spasi, titik (.), dan koma (,)!"); 
+                return;
             }
 
             if (mapel.contains(";") || username.contains(";") || password.contains(";")) {
