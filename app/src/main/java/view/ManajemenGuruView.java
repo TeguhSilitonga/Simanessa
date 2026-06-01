@@ -177,6 +177,7 @@ public class ManajemenGuruView {
         table.setItems(filtered);
     }
 
+    @SuppressWarnings("unchecked")
     private void createColumns() {
         table.getColumns().clear();
 
