@@ -4,47 +4,81 @@ SIMANESSA adalah aplikasi desktop berbasis **JavaFX** yang menerapkan pola arsit
 
 ---
 
+## 👥 Tim Pengembang
+
+Aplikasi ini dikembangkan secara kolaboratif untuk memenuhi Proyek Akhir Lab PBO oleh:
+* **Afdhol As Syamardi - H071251049** - *Fokus: Security, Validasi Regex, Anti-Data Collision, & Utilitas Database.*
+* **Ilmi Ahmad Alfaridzi - H071251052** - *Fokus: Core Engine, Model Data, File I/O Serialization, & Kalkulasi Bobot.*
+* **Teguh Paniro Silitonga -H071251017** - *Fokus: Front-End Architecture, UI Routing, & Desain Antarmuka.*
+--- 
+
 ## 🚀 Fitur Utama
 
-* **Autentikasi Akses Guru:** Sistem login terenkapsulasi untuk memastikan keamanan data nilai akademik siswa dari akses tidak sah.
-* **Manajemen Data Siswa (CRUD):** Operasi komparatif lengkap untuk Menambah (*Create*), Membaca (*Read*), Mengubah (*Update*), dan Menghapus (*Delete*) data profil serta nilai siswa secara dinamis.
-* **Pencarian Efisien & Real-Time:** Menapis dan menampilkan baris data siswa secara instan berdasarkan kecocokan Nomor Induk Siswa (NIS) atau Nama melalui komponen memori yang dioptimalkan.
-* **Kalkulasi Bobot Nilai Dinamis:** Menyesuaikan persentase bobot penilaian (Tugas, UTS, UAS) secara global yang secara otomatis memperbarui akumulasi nilai akhir dan status kelulusan siswa.
-* **Antarmuka Modern (Custom CSS):** Dilengkapi estetika antarmuka bertema gelap (*dark mode*) yang bersih, menggunakan kustomisasi penuh pada komponen TableView dan Dialog Alert.
-* **Pelaporan PDF:** Fitur ekspor kompilasi data nilai siswa secara langsung ke dalam format dokumen PDF yang siap cetak.
+* **Sistem Autentikasi & Keamanan Ketat:** Dilengkapi proteksi *Brute-Force* (pembekuan layar login otomatis selama 15 detik pada 3 kali kegagalan beruntun), validasi input berbasis *Regex*, dan perlindungan *Shoulder Surfing* pada tabel sandi.
 
+* **Manajemen Multi-Peran (Admin & Guru):** Hierarki hak akses terpusat di mana Administrator bertindak sebagai *Super User* untuk mengelola (CRUD) akun kredensial Guru, dilengkapi algoritma *Collision Avoidance* untuk mencegah duplikasi NUPTK/Username.
+
+* **Isolasi Data Siswa (CRUD):** Implementasi penyimpanan Serialization (`.dat`) terenkapsulasi di mana setiap Guru memiliki ruang *database* berkasnya masing-masing. Memastikan data siswa antar kelas/guru terisolasi dengan aman dan tidak bocor.
+
+* **Kalkulasi Bobot Dinamis & Dynamic Tasks:** Jumlah input "Nilai Tugas" bersifat fleksibel (tak terbatas). Guru dapat mengubah persentase bobot penilaian (Tugas, UTS, UAS) secara global yang memicu rekalkulasi otomatis nilai akhir dan status kelulusan seluruh siswa.
+
+* **Filter Bersarang & Pencarian Real-Time:** Menapis dan menyortir data siswa secara instan berdasarkan kecocokan Nomor Induk Siswa (NIS), Nama, Kelas, hingga Status Kelulusan.
+
+* **Arsitektur Single Page Application (SPA):** Menggunakan teknik modifikasi "Root Scene" murni JavaFX (tanpa FXML) yang menghasilkan transisi perpindahan menu super mulus tanpa kedipan (*flicker*) atau perubahan ukuran layar.
+
+* **Pelaporan Eksekutif PDF:** Fitur ekspor kompilasi data nilai akademik siswa secara instan ke dalam format dokumen PDF profesional (terintegrasi dengan *iTextPDF*).
 ---
 
 ## 🛠️ Arsitektur & Struktur Proyek
 
-Proyek ini dipisahkan secara terstruktur berdasarkan tanggung jawab komponen logisnya:
+Proyek ini dipisahkan secara terstruktur berdasarkan prinsip pembagian tanggung jawab komponen (*MVC Pattern*):
 
-```text
+```
+
+text
 app/src/main/java/
 │
 ├── app/
-│   └── Main.java               # Titik Awal Utama (Entry Point) & Manajemen Scene
+│   └── Main.java               # Titik Awal Utama (Entry Point) & SPA Scene Router
 │
 ├── model/
-│   ├── User.java               # Kelas dasar struktural pengguna
-│   ├── Guru.java               # Turunan model khusus entitas Guru
-│   ├── Student.java            # Blueprint representasi identitas dan nilai siswa
-│   └── WeightConfig.java       # Pengaturan pembobotan parameter nilai
+│   ├── User.java               # Kelas abstrak dasar kredensial pengguna
+│   ├── Admin.java              # Entitas super-user (Pewarisan dari User)
+│   ├── Guru.java               # Entitas pendidik (Pewarisan dari User)
+│   ├── Student.java            # Blueprint representasi identitas dan kalkulasi siswa
+│   └── WeightConfig.java       # Kelas statis pengaturan pembobotan parameter nilai
 │
 ├── controller/
-│   ├── StudentManager.java     # Pengendali logika bisnis dan manipulasi I/O data
-│   └── DatabaseHelper.java     # Konfigurasi koneksi database relasional (SQLite)
+│   ├── StudentManager.java     # Mesin I/O Serialisasi berfitur Isolasi Data per Guru
+│   ├── GuruManager.java        # Pengelola logika bisnis autentikasi dan akun Guru
+│   └── DatabaseHelper.java     # Pondasi utilitas koneksi basis data abstrak
 │
 └── view/
-    ├── SplashScreen.java       # Layar pemuatan (loading) visual awal aplikasi
-    ├── LoginView.java          # Formulir autentikasi masuk sistem
-    ├── DashboardView.java      # Panel kontrol utama input data akademik
-    ├── DataSiswaView.java      # Tampilan tabel data induk dan bar pencarian
-    ├── EditStudentView.java    # Dialog pembaruan/reduksi komponen nilai siswa
-    ├── WeightView.java         # Antarmuka modifikasi konfigurasi bobot nilai global
-    └── AlertHelper.java        # Kelas utilitas dialog notifikasi kustom
-```
+    ├── SplashScreen.java       # Layar animasi pemuatan visual awal aplikasi
+    ├── LoginView.java          # Gerbang autentikasi dengan detektor Brute-Force
+    ├── DashboardViewAdmin.java # Panel navigasi utama khusus Administrator
+    ├── DashboardViewGuru.java  # Panel ringkasan statistik real-time khusus Guru
+    ├── ManajemenGuruView.java  # Tabel pengelolaan dan form registrasi akun Guru
+    ├── EditGuruView.java       # Dialog pembaruan kredensial dan identitas Guru
+    ├── DataSiswaView.java      # Tampilan tabel data induk siswa dan form dinamis
+    ├── EditStudentView.java    # Dialog modifikasi identitas dan matriks nilai siswa
+    ├── WeightView.java         # Antarmuka penyesuaian rasio persentase bobot nilai
+    └── AlertHelper.java        # Kelas template utilitas dialog notifikasi seragam
+
+
+
 ---
+
+## 🧱 Penerapan 4 Pilar OOP
+
+Sebagai pemenuhan standar proyek rekayasa perangkat lunak berorientasi objek, SIMANESSA menerapkan empat pilar utama (4 Pillars of OOP) di dalam kodenya:
+
+1. **Encapsulation (Enkapsulasi):** Seluruh properti kritis dalam model data (seperti `password`, `nis`, `nilaiAkhir` di kelas `Student` dan `Guru`) disembunyikan menggunakan access modifier `private`. Modifikasi dan akses data dari luar kelas diatur secara ketat melalui metode `getter` dan `setter`.
+2. **Abstraction (Abstraksi):** Sistem menggunakan kelas `User.java` sebagai konsep abstrak dari pengguna aplikasi. Detail spesifik disembunyikan, dan hanya menyediakan kerangka dasar (seperti `username` dan `password`) yang wajib diimplementasikan oleh entitas nyata turunannya.
+3. **Inheritance (Pewarisan):** Kelas `Guru.java` merupakan turunan (melakukan `extends`) dari kelas induk `User.java`. Kelas `Guru` secara otomatis mewarisi sifat dasar kredensial login, memungkinkan kelas ini fokus pada penambahan atribut spesifik pendidik (seperti NUPTK dan Mata Pelajaran).
+4. **Polymorphism (Polimorfisme):** Diterapkan pada proses distribusi otorisasi. Sistem dapat menerima objek berbentuk kelas induk (`User`), namun saat *runtime* (aplikasi berjalan), metode mampu mengenali wujud asli objek turunannya (`Guru` atau `Admin`) dan memproses tampilan dasbor yang sesuai dengan identitas tersebut.
+
+
 
 ## 📦 Prasyarat Sistem
 
@@ -61,21 +95,27 @@ Sebelum mengeksekusi kode program, pastikan lingkungan perangkat Anda telah terk
 ```bash
 git clone [https://github.com/username_anda/simanessa.git](https://github.com/username_anda/simanessa.git)
 cd simanessa
-```
+
+---
 
 2. **Eksekusi Proyek Melalui Gradle**
-```bash
-./gradlew run run
+./gradlew run
+
+ silahkan open new terminal dan jalankan kode berikut:  ./gradlew ru
 ```
 
 ---
 
 ## 🔒 Hak Akses Masuk Sistem (Default)
 
-Gunakan kredensial bawaan berikut untuk menguji fungsionalitas menu guru pada halaman login utama:
+Untuk keperluan pengujian aplikasi (*testing*), sistem telah dilengkapi dengan kredensial bawaan. Gunakan akses **Administrator** untuk mengelola pendaftaran akun Guru.
 
-* **Username:** `guru`
-* **Password:** `123`
+**👨‍💼 Akses Administrator (Super User):**
+* **Username:** `admin`
+* **Password:** `admin123` *(Sesuaikan jika sandi admin Anda berbeda)*
+
+**👩‍🏫 Akses Pendidik (Guru):**
+*(Anda dapat membuat akun guru baru secara langsung melalui Dasbor Administrator).*
 
 ---
 
