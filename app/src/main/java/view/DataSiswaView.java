@@ -24,7 +24,6 @@ public class DataSiswaView {
     private BorderPane root = new BorderPane();
     private TableView<Student> table = new TableView<>();
     private StudentManager manager;
-    private GuruManager manager2;
     private ObservableList<Student> data = FXCollections.observableArrayList();
     
     private VBox tugasBox = new VBox(10);
@@ -37,7 +36,7 @@ public class DataSiswaView {
 
     public DataSiswaView(String guruUsername) {
         this.guruUsername = guruUsername;
-        this.manager = new GuruManager(guruUsername);
+        this.manager = new StudentManager(guruUsername);
         
         root.setPadding(new Insets(30));
         root.setStyle("-fx-background-color: #0f172a;");
