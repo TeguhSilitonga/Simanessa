@@ -20,7 +20,6 @@ public class DashboardViewGuru {
     private StackPane root = new StackPane();
     private BorderPane basePane = new BorderPane();
     
-    // Kosongkan inisialisasi awal di sini
     private StudentManager manager; 
 
     private Label totalLabel = new Label("0");
@@ -32,13 +31,11 @@ public class DashboardViewGuru {
     public DashboardViewGuru(Stage primaryStage, User user, Main app) {
         Guru guruAktif = (Guru) user;
         
-        // HUBUNGKAN MANAGER KE FILE TXT KHUSUS GURU INI
         this.manager = new StudentManager(guruAktif.getUsername());
         
         root.getChildren().add(basePane);
         basePane.setStyle("-fx-background-color: #0f172a;");
         
-        // BUKA HALAMAN DATA SISWA DAN KIRIMKAN USERNAME GURU INI
         dataSiswaCache = new DataSiswaView(guruAktif.getUsername()).getView();
 
         VBox content = new VBox(40); 

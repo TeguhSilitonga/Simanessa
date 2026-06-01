@@ -64,7 +64,7 @@ app/src/main/java/
     ├── EditStudentView.java    # Dialog modifikasi identitas dan matriks nilai siswa
     ├── WeightView.java         # Antarmuka penyesuaian rasio persentase bobot nilai
     └── AlertHelper.java        # Kelas template utilitas dialog notifikasi seragam
-
+```
 
 
 ---
@@ -83,10 +83,10 @@ Sebagai pemenuhan standar proyek rekayasa perangkat lunak berorientasi objek, SI
 ## 📦 Prasyarat Sistem
 
 Sebelum mengeksekusi kode program, pastikan lingkungan perangkat Anda telah terkonfigurasi dengan runtime berikut:
-
+```
 * **Java Development Kit (JDK):** Versi 17 atau versi yang lebih baru.
 * **Gradle:** Minimal Versi 8.x (Direkomendasikan menggunakan Gradle Wrapper bawaan proyek).
-
+```
 ---
 
 ## ⚙️ Petunjuk Menjalankan Aplikasi
@@ -95,12 +95,12 @@ Sebelum mengeksekusi kode program, pastikan lingkungan perangkat Anda telah terk
 ```bash
 git clone [https://github.com/username_anda/simanessa.git](https://github.com/username_anda/simanessa.git)
 cd simanessa
-
+```
 ---
 
 2. **Eksekusi Proyek Melalui Gradle**
 ./gradlew run
-
+```
  silahkan open new terminal dan jalankan kode berikut:  ./gradlew ru
 ```
 

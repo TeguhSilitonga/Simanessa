@@ -51,7 +51,7 @@ public class ManajemenGuruView {
         refreshTable();
         
         // Memaksa tabel untuk membagi ruang kosong ke semua kolom secara proporsional
-        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
         
         Label emptyLabel = new Label("Belum ada data pendidik yang terdaftar.");
         emptyLabel.setStyle("-fx-text-fill: #64748b; -fx-font-size: 16px; -fx-font-weight: bold;");

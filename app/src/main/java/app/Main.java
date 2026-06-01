@@ -35,7 +35,6 @@ public class Main extends Application {
         LoginView loginView = new LoginView(user -> handleLoginSuccess(user));
         
         primaryStage.getScene().setRoot(loginView.getView());
-        
         primaryStage.setTitle("SIMANESSA - Login");
         primaryStage.setMaximized(true); 
     }

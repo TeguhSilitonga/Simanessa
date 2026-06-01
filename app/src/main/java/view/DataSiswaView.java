@@ -13,7 +13,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.Student;
-
 import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -213,7 +212,7 @@ public class DataSiswaView {
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && !row.isEmpty()) {
                     Student student = row.getItem();
-                    // Mengirimkan username guru juga ke halaman Edit
+                    
                     EditStudentView editView = new EditStudentView(student, guruUsername);
                     Stage stage = new Stage();
                     stage.setScene(new Scene(editView.getView(), 600, 800));
