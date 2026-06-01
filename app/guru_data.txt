@@ -1,0 +1,3 @@
+USERNAME;PASSWORD;NAMA LENGKAP;NUPTK;MATA PELAJARAN
+Ganjar;123;Ganjar Pranowo;12;Olahraga
+Anies;123;Dr. H. Anies Rasyid Baswedan, S.E., M.P.P., Ph.D.;123;Ilmu Politik
