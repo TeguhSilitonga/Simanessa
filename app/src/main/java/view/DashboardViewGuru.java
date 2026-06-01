@@ -26,12 +26,9 @@ public class DashboardViewGuru {
     private Label lulusLabel = new Label("0");
     private Label gagalLabel = new Label("0");
     private Label rataLabel = new Label("0");
-
-    private Main app; 
     private Parent dataSiswaCache;
 
     public DashboardViewGuru(Stage primaryStage, User user, Main app) {
-        this.app = app;
         Guru guruAktif = (Guru) user;
         
         this.manager = new StudentManager(guruAktif.getUsername());

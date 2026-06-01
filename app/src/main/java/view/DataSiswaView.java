@@ -30,10 +30,8 @@ public class DataSiswaView {
     private TextField searchField = new TextField();
     private ComboBox<String> kelasFilter = new ComboBox<>();
     private ComboBox<String> statusFilter = new ComboBox<>();
-    private String guruUsername;
 
     public DataSiswaView(String guruUsername) {
-        this.guruUsername = guruUsername;
         this.manager = new StudentManager(guruUsername);
         
         root.setPadding(new Insets(30));
@@ -286,7 +284,7 @@ public class DataSiswaView {
 
         table.setItems(data);
     }
-
+    @SuppressWarnings("unchecked")
     private void createColumns() {
         table.getColumns().clear();
 

@@ -14,12 +14,10 @@ public class DashboardViewAdmin {
 
     private StackPane root = new StackPane();
     private BorderPane basePane = new BorderPane();
-    private Main app;
    
     private Parent manajemenGuruCache;
 
     public DashboardViewAdmin(Main app) {
-        this.app = app;
         root.getChildren().add(basePane);
         basePane.setStyle("-fx-background-color: #0f172a;");
         
