@@ -33,6 +33,14 @@ public class GuruManager {
         return null;
     }
 
+    // FUNGSI BARU: Mengambil data Guru utuh untuk dicetak ke PDF
+    public Guru getGuru(String username) {
+        for (Guru g : listGuru) {
+            if (g.getUsername().equals(username)) return g;
+        }
+        return null;
+    }
+
     public void loadData() {
         listGuru.clear();
         File file = new File(FILE_PATH);

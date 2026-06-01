@@ -1,6 +1,8 @@
 package view;
 
 import controller.StudentManager;
+import controller.GuruManager;
+import model.Guru;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -177,8 +179,18 @@ public class DataSiswaView {
         pdfBtn.setStyle(secondaryButton());
         pdfBtn.setMaxWidth(Double.MAX_VALUE);
         pdfBtn.setOnAction(event -> {
-            manager.exportPDF();
-            AlertHelper.showInfo("Export Berhasil", "Data berhasil di-export ke dalam file PDF!");
+            GuruManager gm = new GuruManager();
+            Guru guruAktif = gm.getGuru(guruUsername);
+            
+            if (guruAktif != null) {
+                // Mengirim objek guruAktif ke fungsi exportPDF
+                manager.exportPDF(guruAktif);
+                
+                String namaFile = "Laporan_Nilai_" + guruAktif.getNama().replace(" ", "_") + ".pdf";
+                AlertHelper.showInfo("Export Berhasil", "Data berhasil dicetak dengan nama:\n" + namaFile);
+            } else {
+                AlertHelper.showError("Gagal memuat identitas Pendidik!");
+            }
         });
 
         ScrollPane formScroll = new ScrollPane();
@@ -284,6 +296,7 @@ public class DataSiswaView {
 
         table.setItems(data);
     }
+    
     @SuppressWarnings("unchecked")
     private void createColumns() {
         table.getColumns().clear();

@@ -1,9 +1,11 @@
 package controller;
 
 import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import model.Student;
+import model.Guru; // Pastikan ini di-import agar bisa membaca data Guru
 import model.WeightConfig;
 
 import java.io.*;
@@ -134,19 +136,62 @@ public class StudentManager {
         saveData();
     }
 
-    public void exportPDF() {
+    // Fungsi Bantuan untuk membuat kolom tanpa garis (Kop Identitas)
+    private PdfPCell createNoBorderCell(String text) {
+        PdfPCell cell = new PdfPCell(new Phrase(text));
+        cell.setBorder(Rectangle.NO_BORDER);
+        return cell;
+    }
+
+    // Fungsi Export PDF yang sudah di-Upgrade
+    public void exportPDF(Guru guruAktif) {
         try {
+            // 1. Nama file dinamis agar tidak menimpa file guru lain
+            String namaFileStr = guruAktif.getNama().replace(" ", "_");
+            String dest = "Laporan_Nilai_" + namaFileStr + ".pdf";
+
             Document document = new Document();
-            PdfWriter.getInstance(document, new FileOutputStream("laporan_hasil_belajar.pdf"));
+            PdfWriter.getInstance(document, new FileOutputStream(dest));
             document.open();
 
-            Paragraph title = new Paragraph("LAPORAN HASIL BELAJAR SISWA", FontFactory.getFont(FontFactory.HELVETICA_BOLD,18));
+            // 2. Judul Utama
+            Paragraph title = new Paragraph("LAPORAN HASIL BELAJAR SISWA", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18));
             title.setAlignment(Element.ALIGN_CENTER);
-
             document.add(title);
             document.add(new Paragraph(" "));
+            document.add(new Paragraph(" ")); // Spasi tambahan
 
+            // 3. Kop Identitas Guru (Tabel Tanpa Garis agar Titik Dua Sejajar)
+            PdfPTable infoTable = new PdfPTable(3);
+            infoTable.setWidthPercentage(100);
+            infoTable.setWidths(new float[]{2.5f, 0.2f, 7.3f}); // Proporsi lebar kolom
+
+            // Baris Nama
+            infoTable.addCell(createNoBorderCell("Nama Pendidik"));
+            infoTable.addCell(createNoBorderCell(":"));
+            infoTable.addCell(createNoBorderCell(guruAktif.getNama()));
+
+            // Baris NUPTK
+            infoTable.addCell(createNoBorderCell("NUPTK"));
+            infoTable.addCell(createNoBorderCell(":"));
+            infoTable.addCell(createNoBorderCell(guruAktif.getNuptk()));
+
+            // Baris Mata Pelajaran
+            infoTable.addCell(createNoBorderCell("Mata Pelajaran"));
+            infoTable.addCell(createNoBorderCell(":"));
+            infoTable.addCell(createNoBorderCell(guruAktif.getMataPelajaran()));
+
+            // Baris Tanggal Cetak
+            infoTable.addCell(createNoBorderCell("Tanggal Cetak"));
+            infoTable.addCell(createNoBorderCell(":"));
+            infoTable.addCell(createNoBorderCell(java.time.LocalDate.now().toString()));
+
+            document.add(infoTable);
+            document.add(new Paragraph(" ")); // Jarak sebelum tabel nilai siswa
+
+            // 4. Tabel Nilai Siswa (Kode Lama Anda)
             PdfPTable table = new PdfPTable(7);
+            table.setWidthPercentage(100); // Agar tabel memenuhi lebar kertas
 
             table.addCell("NIS");
             table.addCell("Nama");
@@ -171,8 +216,12 @@ public class StudentManager {
                 table.addCell(String.valueOf(s.getNilaiAkhir()));
                 table.addCell(s.getStatus());
             }
+            
             document.add(table);
             document.close();
+            
+            System.out.println("PDF Berhasil dibuat dengan nama: " + dest);
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
