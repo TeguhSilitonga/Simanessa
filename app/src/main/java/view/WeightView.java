@@ -1,6 +1,5 @@
 package view;
 
-import controller.StudentManager;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -48,14 +47,14 @@ public class WeightView {
                     return;
                 }
 
+                // Update variabel global
                 WeightConfig.utsWeight = uts;
                 WeightConfig.uasWeight = uas;
                 WeightConfig.tugasWeight = tugas;
 
-                StudentManager manager = new StudentManager();
-                manager.refreshAllStudentScores();
+                // PERBAIKAN: Baris StudentManager dihapus dari sini karena 
+                // kalkulasi ulang sudah ditangani langsung oleh DataSiswaView.
 
-                // PERBAIKAN: Menggunakan AlertHelper
                 AlertHelper.showInfo("Sukses", "Konfigurasi bobot berhasil diperbarui!");
                 stage.close();
             } catch (Exception ex) {
