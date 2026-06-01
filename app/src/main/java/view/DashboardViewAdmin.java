@@ -15,7 +15,6 @@ public class DashboardViewAdmin {
     private StackPane root = new StackPane();
     private BorderPane basePane = new BorderPane();
     private Main app;
-    
    
     private Parent manajemenGuruCache;
 
@@ -24,7 +23,6 @@ public class DashboardViewAdmin {
         root.getChildren().add(basePane);
         basePane.setStyle("-fx-background-color: #0f172a;");
         
-        // Inisialisasi layar Manajemen Guru SATU KALI saja
         manajemenGuruCache = new ManajemenGuruView().getView();
 
         VBox homeContent = new VBox(20);
@@ -57,9 +55,7 @@ public class DashboardViewAdmin {
         logoutBtn.setMaxWidth(Double.MAX_VALUE);
         logoutBtn.setStyle("-fx-background-color: #7F1D1D; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 12; -fx-background-radius: 8; -fx-cursor: hand;");
         
-        logoutBtn.setOnAction(e -> {
-            if (AlertHelper.showConfirm("Logout", "Keluar dari sesi administrator?")) app.logoutWithSplash();
-        });
+        logoutBtn.setOnAction(e -> {if (AlertHelper.showConfirm("Logout", "Keluar dari sesi administrator?")) app.logoutWithSplash();});
 
         Region spacer = new Region(); VBox.setVgrow(spacer, Priority.ALWAYS);
         sidebar.getChildren().addAll(brandTitle, div1, dashboardBtn, manageGuruBtn, spacer, logoutBtn);
@@ -81,7 +77,6 @@ public class DashboardViewAdmin {
         });
 
         manageGuruBtn.setOnAction(e -> {
-            // Cukup panggil cache yang sudah ada, jangan buat 'new ManajemenGuruView()' lagi
             basePane.setCenter(manajemenGuruCache);
             slideOut.playFromStart(); isOpen[0] = false;
         });

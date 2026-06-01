@@ -15,7 +15,6 @@ public class SplashScreen {
         root.setAlignment(Pos.CENTER);
 
         root.setStyle("-fx-background-color: #FFFFFF;");
-        // LOGO SIMANESSA 
         try {
             Image img = new Image(SplashScreen.class.getResource("/images/Logo.jpg").toExternalForm());
             ImageView logoView = new ImageView(img);
@@ -29,27 +28,17 @@ public class SplashScreen {
 
         Label logoText = new Label("SIMANESSA");
 
-        logoText.setStyle(
-                "-fx-font-size: 50px;"
-                        + "-fx-text-fill: #1E6FD9;" 
-                        + "-fx-font-weight: bold;"
-        );
+        logoText.setStyle("-fx-font-size: 50px;" + "-fx-text-fill: #1E6FD9;" + "-fx-font-weight: bold;");
 
         Label loading = new Label("Sistem Manajemen Nilai Evaluasi Siswa");
 
-        loading.setStyle(
-                "-fx-text-fill: #4B5563;" 
-                        + "-fx-font-size: 18px;"
-                        + "-fx-font-style: italic;"
-        );
+        loading.setStyle("-fx-text-fill: #4B5563;" + "-fx-font-size: 18px;" + "-fx-font-style: italic;");
 
         root.getChildren().addAll(logoText, loading);
         
         Scene scene = new Scene(root);
 
         stage.setScene(scene);
-        
-        // TRIK MEMAKSA WINDOWS FULLSCREEN SAAT SPLASH
         stage.setMaximized(false);
         stage.setMaximized(true); 
         
