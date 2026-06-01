@@ -28,10 +28,8 @@ public class DashboardView {
     private Label gagalLabel = new Label("0");
     private Label rataLabel = new Label("0");
 
-    private Main app; 
 
     public DashboardView(Stage primaryStage, User user, Main app) {
-        this.app = app;
         
         // PERBAIKAN 2: Inisialisasi manager di sini dengan membawa username (Isolasi Data)
         this.manager = new StudentManager(user.getUsername());

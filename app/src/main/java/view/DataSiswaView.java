@@ -1,7 +1,6 @@
 package view;
 
 import controller.StudentManager;
-import controller.GuruManager;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,10 +31,8 @@ public class DataSiswaView {
     private TextField searchField = new TextField();
     private ComboBox<String> kelasFilter = new ComboBox<>();
     private ComboBox<String> statusFilter = new ComboBox<>();
-    private String guruUsername;
 
     public DataSiswaView(String guruUsername) {
-        this.guruUsername = guruUsername;
         this.manager = new StudentManager(guruUsername);
         
         root.setPadding(new Insets(30));
@@ -68,7 +65,7 @@ public class DataSiswaView {
 
         createColumns();
         refreshTable(); 
-        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
         VBox.setVgrow(table, Priority.ALWAYS);
 
         leftContent.getChildren().addAll(headerBox, table);
@@ -288,7 +285,7 @@ public class DataSiswaView {
 
         table.setItems(data);
     }
-
+    @SuppressWarnings("unchecked")
     private void createColumns() {
         table.getColumns().clear();
 

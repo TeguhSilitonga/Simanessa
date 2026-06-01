@@ -22,6 +22,7 @@ public class StudentManager {
         loadData();
     }
 
+    @SuppressWarnings("unchecked")
     public void loadData() {
         try {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(FILE_NAME));
