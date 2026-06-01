@@ -101,7 +101,7 @@ cd simanessa
 2. **Eksekusi Proyek Melalui Gradle**
 ./gradlew run
 ```
- silahkan open new terminal dan jalankan kode berikut:  ./gradlew ru
+ silahkan open new terminal dan jalankan kode berikut:  ./gradlew run
 ```
 
 ---
