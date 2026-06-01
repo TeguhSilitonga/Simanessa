@@ -18,7 +18,9 @@ import model.User;
 public class DashboardView {
 
     private BorderPane root = new BorderPane();
-    private StudentManager manager = new StudentManager();
+    
+    // PERBAIKAN 1: Hapus inisialisasi kosong di sini
+    private StudentManager manager; 
     private ObservableList<Student> data = FXCollections.observableArrayList();
 
     private Label totalLabel = new Label("0");
@@ -30,6 +32,10 @@ public class DashboardView {
 
     public DashboardView(Stage primaryStage, User user, Main app) {
         this.app = app;
+        
+        // PERBAIKAN 2: Inisialisasi manager di sini dengan membawa username (Isolasi Data)
+        this.manager = new StudentManager(user.getUsername());
+        
         root.setStyle("-fx-background-color: #0f172a;");
         data.addAll(manager.getStudents());
 
@@ -75,7 +81,6 @@ public class DashboardView {
         logoutBtn.setOnMouseExited(e -> logoutBtn.setStyle(logoutNormal));
 
         logoutBtn.setOnAction(e -> {
-            // PERBAIKAN: Menggunakan AlertHelper kustom
             if (AlertHelper.showConfirm("Konfirmasi Logout", "Anda yakin ingin keluar dari sistem?")) {
                 app.logoutWithSplash(); 
             }
@@ -123,7 +128,8 @@ public class DashboardView {
         });
 
         siswaBtn.setOnAction(event -> {
-            DataSiswaView dataSiswaView = new DataSiswaView();
+            // PERBAIKAN 3: Kirimkan username pengguna ke DataSiswaView
+            DataSiswaView dataSiswaView = new DataSiswaView(user.getUsername());
             root.setCenter(dataSiswaView.getView());
         });
 

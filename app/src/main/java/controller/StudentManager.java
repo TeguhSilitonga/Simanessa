@@ -12,17 +12,19 @@ import java.util.ArrayList;
 public class StudentManager {
         
     private ArrayList<Student> students = new ArrayList<>();
+    
+    // Perbaikan: Variabel FILE_NAME tidak lagi statis/final
+    private String FILE_NAME; 
 
-    private final String FILE_NAME = "students.dat";
-
-    public StudentManager() {
+    // Perbaikan: Wajib menerima username guru agar file terpisah (Isolasi Data)
+    public StudentManager(String guruUsername) {
+        this.FILE_NAME = "student_data_" + guruUsername + ".dat";
         loadData();
     }
 
     public void loadData() {
         try {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(FILE_NAME));
-
             students = (ArrayList<Student>) in.readObject();
             in.close();
         } catch (Exception e) {
@@ -33,7 +35,6 @@ public class StudentManager {
     public void saveData() {
         try {
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(FILE_NAME));
-
             out.writeObject(students);
             out.close();
         } catch (Exception e) {
@@ -48,7 +49,6 @@ public class StudentManager {
 
     public void addStudent(Student student) {
         students.add(student);
-
         normalizeAllTasks();
         refreshAllStudentScores();
         saveData();
@@ -67,9 +67,7 @@ public class StudentManager {
 
     public void updateStudent(Student oldStudent, Student newStudent) {
         for (int i = 0; i < students.size(); i++) {
-
             Student current = students.get(i);
-
             if (current.getNis().equals(oldStudent.getNis())) {
                 students.set(i, newStudent);
                 break;
@@ -81,7 +79,6 @@ public class StudentManager {
     }
 
     public boolean isDuplicate(String nis, String nama) {
-
         for (Student s : students) {
             if (s.getNis().equalsIgnoreCase(nis) || s.getNama().equalsIgnoreCase(nama)) {
                 return true;
@@ -102,7 +99,6 @@ public class StudentManager {
 
     public void normalizeAllTasks() {
         int maxTugas = getMaxTugas();
-
         for (Student s : students) {
             while (s.getTugasList().size() < maxTugas) {
                 s.getTugasList().add(0.0);
@@ -112,13 +108,11 @@ public class StudentManager {
 
     public double calculateFinalScore(double uts, double uas, ArrayList<Double> tugasList) {
         double total = 0;
-
         for (double t : tugasList) {
             total += t;
         }
 
         double rataTugas = 0;
-
         if (!tugasList.isEmpty()) {
             rataTugas = total / tugasList.size();
         }
@@ -128,7 +122,6 @@ public class StudentManager {
     public void refreshAllStudentScores() {
         for (Student s : students) {
             double akhir = calculateFinalScore(s.getUts(), s.getUas(), s.getTugasList());
-
             s.setNilaiAkhir(akhir);
 
             if (akhir >= 75) {
@@ -165,12 +158,10 @@ public class StudentManager {
             for (Student s : students) {
                 table.addCell(s.getNis());
                 table.addCell(s.getNama());
-
                 table.addCell(String.valueOf(s.getUts()));
                 table.addCell(String.valueOf(s.getUas()));
 
                 String tugasText = "";
-
                 for (int i = 0; i < s.getTugasList().size(); i++) {
                     tugasText += "T" + (i + 1) + ": " + s.getTugasList().get(i) + "\n";
                 }
